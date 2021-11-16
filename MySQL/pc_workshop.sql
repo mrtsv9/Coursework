@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`clients` (
   PRIMARY KEY (`client_id`))
 ENGINE = InnoDB;
 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+flush privileges;
 
 -- -----------------------------------------------------
 -- Table `pc_workshop`.`payment_methods`
