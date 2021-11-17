@@ -28,7 +28,7 @@ router.get("/", (req,res) => {
       
       const clients = rows.map((row) => {
         return {
-          clientId: row.id,
+          clientId: row.client_id,
           firstName: row.first_name,
           lastName: row.last_name,
           email: row.email,
