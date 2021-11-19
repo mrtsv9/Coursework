@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`payment_methods` (
   PRIMARY KEY (`payment_methods_id`))
 ENGINE = InnoDB;
 
+INSERT INTO payment_methods (payment_type) VALUES ("nalom"), ("analom)))");
 
 -- -----------------------------------------------------
 -- Table `pc_workshop`.`delivery_methods`
@@ -51,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`delivery_methods` (
   PRIMARY KEY (`delivery_methods_id`))
 ENGINE = InnoDB;
 
+INSERT INTO delivery_methods (delivery_type) VALUES ("by car"), ("sam blyat' zaberesh)))");
 
 -- -----------------------------------------------------
 -- Table `pc_workshop`.`orders`
@@ -92,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`positions` (
   PRIMARY KEY (`positions_id`))
 ENGINE = InnoDB;
 
-
+INSERT INTO positions (name) VALUES ("admin"), ("ne admin");
 -- -----------------------------------------------------
 -- Table `pc_workshop`.`employees`
 -- -----------------------------------------------------
@@ -124,6 +126,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`assemblies` (
   PRIMARY KEY (`assembly_id`))
 ENGINE = InnoDB;
 
+INSERT INTO assemblies (name) VALUES ("comp1"), ("comp2");
 
 -- -----------------------------------------------------
 -- Table `pc_workshop`.`pc`
@@ -164,6 +167,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`types_of_accessories` (
   PRIMARY KEY (`types_of_accessories_id`))
 ENGINE = InnoDB;
 
+INSERT INTO types_of_accessories (type) VALUES ("cpu"), ("gpu");
 
 -- -----------------------------------------------------
 -- Table `pc_workshop`.`accessories`
