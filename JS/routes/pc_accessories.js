@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all pc_accessories")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM pc_accessories  JOIN accessories ON accessories.accessories_id = pc_accessories.accessories_id    JOIN pc ON pc.pc_id = pc_accessories.pc_id"
+    const queryString = "SELECT * FROM pc_accessories  JOIN pc ON pc.pc_id= pc_accessories.pc_id   JOIN accessories ON accessories.accessory_id = pc_accessories.accessory_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for pc_accessories: " + error)
@@ -28,63 +28,62 @@ router.get("/", (req,res) => {
       
       const pc_accessories = rows.map((row) => {
         return {
-          pcAccessoriesId: row.pc_accessories_id,
-          accessoriesId: row.accessories_id,
-          accessories: {
-            accessoriesId: row.accessories_id,  
-            name: row.name,
-            properties: row.properties,
-            typeOfAccessoriesId: row.types_of_accessories_id,
-            typeOfAccessories: {
-              typeOfAccessoriesId: row.types_of_accessories_id,
-              type: row.type
-            }
-          },
           pcId: row.pc_id,
           pc: {
-            pcId: row.pc_id,
+          pcId: row.pc_id,
+          orderId: row.order_id,
+          order: {
             orderId: row.order_id,
-            order: {
-              orderId: row.order_id,
-              address: row.address,
-              clientId: row.clients_client_id,
-              clients: {
-                clientId: row.client_id,
-                firstName: row.first_name,
-                lastName: row.last_name,
-                email: row.email,
-                phoneNumber: row.phone_number
-              },
-              paymentMethodsId: row.payment_methods_id,
-              payment_methods: {
-                paymentMethodsId: row.payment_methods_id
-              },
-              deliveryMethodsId: row.delivery_methods_id,
-              delivery_methods: {
-                deliveryMethodsId: row.delivery_methods_id,
-                deliveryType: row.delivery_type
-              }
-            },
-            employeesId: row.employees_id,
-            employee: {
-              employeesId: row.employees_id,
+            address: row.address,
+            clientId: row.client_id,
+            clients: {
+              clientId: row.client_id,
               firstName: row.first_name,
               lastName: row.last_name,
-              middleName: row.middle_name,
-              address: row.address,
-              phoneNumber: row.phone_number,
               email: row.email,
-              positionsId: row.positions_positions_id,
-              position: {
-                positionsId: row.positions_positions_id,
-                name: row.name
-              }
+              phoneNumber: row.phone_number
             },
+            paymentMethodsId: row.payment_methods_id,
+            payment_methods: {
+              paymentMethodsId: row.payment_methods_id
+            },
+            deliveryMethodsId: row.delivery_methods_id,
+            delivery_methods: {
+              deliveryMethodsId: row.delivery_methods_id,
+              deliveryType: row.delivery_type
+            } 
+          },
+          assemblyId: row.assembly_id,
+          assembly: {
             assemblyId: row.assembly_id,
-            assembly: {
-              assemblyId: row.assembly_id,
+            name: row.name
+          },
+          employeesId: row.employees_id,
+          employee: {
+            employeesId: row.employees_id,
+            firstName: row.first_name,
+            lastName: row.last_name,
+            middleName: row.middle_name,
+            address: row.address,
+            phoneNumber: row.phone_number,
+            email: row.email,
+            positionsId: row.positions_positions_id,
+            position: {
+              positionsId: row.positions_positions_id,
               name: row.name
             }
+          }
+          },
+          accessoryId: row.accessory_id,
+          accessory: {
+            accessoriesId: row.accessories_id,  
+          name: row.name,
+          properties: row.properties,
+          typeOfAccessoriesId: row.types_of_accessories_id,
+          typeOfAccessories: {
+            typeOfAccessoriesId: row.types_of_accessories_id,
+            type: row.type
+          }
           }
         }
       })
@@ -97,8 +96,8 @@ router.get("/", (req,res) => {
   router.post("/create", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "INSERT INTO `pc_accessories` (accessories_id, pc_id) VALUES (?, ?)"
-    getConnection().query(queryString, [req.body.accessories_id,  req.body.pc_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `pc_accessories` (pc_id, accessory_id) VALUES (?, ?)"
+    getConnection().query(queryString, [req.body.pc_id, req.body.accessories_id], (err, results, fields) => {
       if (err) {    
         res.sendStatus(500)
         return
@@ -128,8 +127,8 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "UPDATE `pc_accessories` SET accessories_id = ?, pc_id = ? WHERE pc_accessories_id = ?"
-    getConnection().query(queryString, [req.body.accessories_id, req.body.pc_id, req.params.id], (err, results, fields) => {
+    const queryString = "UPDATE `pc_accessories` SET pc_id = ?, accessory_id = ? WHERE pc_accessories_id = ?"
+    getConnection().query(queryString, [req.body.pc_id, req.body.accessory_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)

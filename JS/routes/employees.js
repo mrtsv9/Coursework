@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all employees")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM employees    JOIN positions ON positions.positions_id = employees.positions_positions_id"
+    const queryString = "SELECT * FROM employees    JOIN positions ON positions.positions_id = employees.position_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for employees: " + error)
@@ -35,9 +35,9 @@ router.get("/", (req,res) => {
           address: row.address,
           phoneNumber: row.phone_number,
           email: row.email,
-          positionsId: row.positions_positions_id,
+          positionsId: row.position_id,
           position: {
-            positionsId: row.positions_positions_id,
+            positionsId: row.position_id,
             name: row.name
           }
         }
@@ -51,8 +51,8 @@ router.get("/", (req,res) => {
   router.post("/create", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "INSERT INTO `employees` (first_name, last_name, middle_name, address, phone_number, email, positions_positions_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
-    getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.email, req.body.positions_positions_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `employees` (first_name, last_name, middle_name, address, phone_number, email, position_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.email, req.body.position_id], (err, results, fields) => {
       if (err) {
         res.sendStatus(500)
         return
@@ -82,8 +82,8 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "UPDATE `employees` SET first_name = ?, last_name = ?, middle_name = ?, address = ?, phone_number = ?, email = ?, positions_positions_id = ? WHERE employees_id = ?"
-    getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.addemailress, req.body.positions_positions_id], (err, results, fields) => {
+    const queryString = "UPDATE `employees` SET first_name = ?, last_name = ?, middle_name = ?, address = ?, phone_number = ?, email = ?, position_id = ? WHERE employees_id = ?"
+    getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.email, req.body.position_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)
