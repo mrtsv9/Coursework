@@ -35,9 +35,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`delivery_methods` (
   `delivery_method_id` INT NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(45) NOT NULL,
+  `delivery_type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`delivery_method_id`),
-  UNIQUE INDEX `delivery_type_UNIQUE` (`type` ASC) VISIBLE)
+  UNIQUE INDEX `delivery_type_UNIQUE` (`delivery_type` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -46,9 +46,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`payment_methods` (
   `payment_method_id` INT NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(45) NOT NULL,
+  `payment_type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`payment_method_id`),
-  UNIQUE INDEX `payment_type_UNIQUE` (`type` ASC) VISIBLE)
+  UNIQUE INDEX `payment_type_UNIQUE` (`payment_type` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

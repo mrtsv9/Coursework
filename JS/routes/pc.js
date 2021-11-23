@@ -18,7 +18,9 @@ router.get("/", (req,res) => {
     console.log("Fetching all pc's")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM pc    JOIN orders ON orders.order_id = pc.order_id   JOIN assembly_types ON assembly_types.assembly_type_id = pc.assembly_type_id    JOIN employees ON employees.employee_id = pc.employee_id"
+    const queryString = "SELECT * FROM pc"
+
+    // const queryString = "SELECT * FROM pc    JOIN orders ON orders.order_id = pc.order_id   JOIN assembly_types ON assembly_types.assembly_type_id = pc.assembly_type_id    JOIN employees ON employees.employee_id = pc.employee_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for pc's: " + error)
@@ -30,48 +32,8 @@ router.get("/", (req,res) => {
         return {
           pcId: row.pc_id,
           orderId: row.order_id,
-          order:{
-            orderId: row.order_id,
-            address: row.address,
-            clientId: row.client_id,
-            clients: {
-              clientId: row.client_id,
-              firstName: row.first_name,
-              lastName: row.last_name,
-              email: row.email,
-              phoneNumber: row.phone_number
-            },
-            paymentMethodsId: row.payment_methods_id,
-            payment_methods: {
-              paymentMethodsId: row.payment_methods_id,
-              paymentMethodsId: row.payment_methods_id
-            },
-            deliveryMethodsId: row.delivery_methods_id,
-            delivery_methods: {
-              deliveryMethodsId: row.delivery_methods_id,
-              deliveryType: row.delivery_type
-            }
-          },
           assemblyTypeId: row.assembly_type_id,
-          // assemblyType: {
-          //   assemblyTypeId: row.assembly_type_id,
-          //   type = row.type
-          // },
-          employeeId: row.employee_id,
-          employee: {
-            employeesId: row.employee_id,
-            firstName: row.first_name,
-            lastName: row.last_name,
-            middleName: row.middle_name,
-            address: row.address,
-            phoneNumber: row.phone_number,
-            email: row.email,
-            positionsId: row.position_id,
-            position: {
-              positionsId: row.position_id,
-              name: row.name
-            }
-          }
+          employeeId: row.employee_id
         }
       })
   

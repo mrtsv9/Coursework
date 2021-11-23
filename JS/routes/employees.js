@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all employees")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM employees    JOIN positions ON positions.positions_id = employees.position_id"
+    const queryString = "SELECT * FROM employees    JOIN positions ON positions.position_id = employees.position_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for employees: " + error)
@@ -28,14 +28,14 @@ router.get("/", (req,res) => {
       
       const employees = rows.map((row) => {
         return {
-          employeesId: row.employees_id,
+          employeeId: row.employee_id,
           firstName: row.first_name,
           lastName: row.last_name,
           middleName: row.middle_name,
           address: row.address,
           phoneNumber: row.phone_number,
           email: row.email,
-          positionsId: row.position_id,
+          positionId: row.position_id,
           position: {
             positionsId: row.position_id,
             name: row.name

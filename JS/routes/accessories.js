@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all accessories")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM accessories    JOIN types_of_accessories ON types_of_accessories.types_of_accessories_id = accessories.types_of_accessories_id"
+    const queryString = "SELECT * FROM accessories    JOIN types_of_accessories ON types_of_accessories.type_of_accessory_id = accessories.type_of_accessory_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for accessories: " + error)
@@ -28,12 +28,12 @@ router.get("/", (req,res) => {
       
       const accessories = rows.map((row) => {
         return {
-          accessoriesId: row.accessories_id,  
+          accessoriesId: row.accessory_id,  
           name: row.name,
           properties: row.properties,
-          typeOfAccessoriesId: row.types_of_accessories_id,
+          typeOfAccessoriesId: row.type_of_accessory_id,
           typeOfAccessories: {
-            typeOfAccessoriesId: row.types_of_accessories_id,
+            typeOfAccessoriesId: row.type_of_accessory_id,
             type: row.type
           }
         }
