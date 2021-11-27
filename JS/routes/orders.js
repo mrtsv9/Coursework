@@ -81,7 +81,7 @@ router.get("/", (req,res) => {
         res.sendStatus(500)
         res.end()
       }
-  
+    
       console.log("I think we fetched orders successfully")
       res.json(rows)
     })

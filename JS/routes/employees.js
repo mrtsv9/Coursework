@@ -18,14 +18,14 @@ router.get("/", (req,res) => {
     console.log("Fetching all employees")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM employees    JOIN positions ON positions.positions_id = employees.position_id"
+    const queryString = "SELECT * FROM employees JOIN positions ON positions.positions_id = employees.position_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for employees: " + error)
         res.sendStatus(500)
         res.end()
       }
-      
+     
       const employees = rows.map((row) => {
         return {
           employeesId: row.employees_id,
@@ -35,14 +35,14 @@ router.get("/", (req,res) => {
           address: row.address,
           phoneNumber: row.phone_number,
           email: row.email,
-          positionsId: row.position_id,
+          positionsId: row.position_id,               
           position: {
             positionsId: row.position_id,
             name: row.name
           }
         }
       })
-  
+    
       console.log("I think we fetched employees successfully")
       res.json(employees)
     })
