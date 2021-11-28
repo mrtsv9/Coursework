@@ -29,62 +29,7 @@ router.get("/", (req,res) => {
       const pc_accessories = rows.map((row) => {
         return {
           pcId: row.pc_id,
-          pc: {
-          pcId: row.pc_id,
-          orderId: row.order_id,
-          order: {
-            orderId: row.order_id,
-            address: row.address,
-            clientId: row.client_id,
-            clients: {
-              clientId: row.client_id,
-              firstName: row.first_name,
-              lastName: row.last_name,
-              email: row.email,
-              phoneNumber: row.phone_number
-            },
-            paymentMethodsId: row.payment_methods_id,
-            payment_methods: {
-              paymentMethodsId: row.payment_methods_id
-            },
-            deliveryMethodsId: row.delivery_methods_id,
-            delivery_methods: {
-              deliveryMethodsId: row.delivery_methods_id,
-              deliveryType: row.delivery_type
-            } 
-          },
-          assemblyId: row.assembly_id,
-          assembly: {
-            assemblyId: row.assembly_id,
-            name: row.name
-          },
-          employeesId: row.employees_id,
-          employee: {
-            employeesId: row.employees_id,
-            firstName: row.first_name,
-            lastName: row.last_name,
-            middleName: row.middle_name,
-            address: row.address,
-            phoneNumber: row.phone_number,
-            email: row.email,
-            positionsId: row.positions_positions_id,
-            position: {
-              positionsId: row.positions_positions_id,
-              name: row.name
-            }
-          }
-          },
-          accessoryId: row.accessory_id,
-          accessory: {
-            accessoriesId: row.accessories_id,  
-          name: row.name,
-          properties: row.properties,
-          typeOfAccessoriesId: row.types_of_accessories_id,
-          typeOfAccessories: {
-            typeOfAccessoriesId: row.types_of_accessories_id,
-            type: row.type
-          }
-          }
+          accessoryId: row.accessory_id
         }
       })
   
@@ -141,10 +86,11 @@ router.get("/", (req,res) => {
   router.delete("/delete/:id", (req, res) =>{
     const connection = getConnection()
 
-    const queryString = "DELETE FROM `pc_accessories` WHERE pc_accessories_id = ?"
+    const queryString = "DELETE FROM `pc_accessories` WHERE pc_id = ?"
   
     connection.query(queryString, [req.params.id], (error, rows, fields) => {
       if (error) {
+        console.log(error)
         res.sendStatus(500)
       }
       res.end()

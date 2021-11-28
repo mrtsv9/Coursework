@@ -18,7 +18,9 @@ router.get("/", (req,res) => {
     console.log("Fetching all pc's")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM pc    JOIN orders ON orders.order_id = pc.order_id   JOIN assembly_types ON assembly_types.assembly_type_id = pc.assembly_type_id    JOIN employees ON employees.employee_id = pc.employee_id"
+    const queryString = "SELECT * FROM pc"
+
+    // const queryString = "SELECT * FROM pc    JOIN orders ON orders.order_id = pc.order_id   JOIN assembly_types ON assembly_types.assembly_type_id = pc.assembly_type_id    JOIN employees ON employees.employee_id = pc.employee_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for pc's: " + error)
@@ -30,48 +32,8 @@ router.get("/", (req,res) => {
         return {
           pcId: row.pc_id,
           orderId: row.order_id,
-          order:{
-            orderId: row.order_id,
-            address: row.address,
-            clientId: row.client_id,
-            clients: {
-              clientId: row.client_id,
-              firstName: row.first_name,
-              lastName: row.last_name,
-              email: row.email,
-              phoneNumber: row.phone_number
-            },
-            paymentMethodsId: row.payment_methods_id,
-            payment_methods: {
-              paymentMethodsId: row.payment_methods_id,
-              paymentMethodsId: row.payment_methods_id
-            },
-            deliveryMethodsId: row.delivery_methods_id,
-            delivery_methods: {
-              deliveryMethodsId: row.delivery_methods_id,
-              deliveryType: row.delivery_type
-            }
-          },
           assemblyTypeId: row.assembly_type_id,
-          // assemblyType: {
-          //   assemblyTypeId: row.assembly_type_id,
-          //   type = row.type
-          // },
-          employeeId: row.employee_id,
-          employee: {
-            employeesId: row.employee_id,
-            firstName: row.first_name,
-            lastName: row.last_name,
-            middleName: row.middle_name,
-            address: row.address,
-            phoneNumber: row.phone_number,
-            email: row.email,
-            positionsId: row.position_id,
-            position: {
-              positionsId: row.position_id,
-              name: row.name
-            }
-          }
+          employeeId: row.employee_id
         }
       })
   
@@ -81,10 +43,9 @@ router.get("/", (req,res) => {
   })
 
   router.post("/create", (req, res) => {
-    const connection = getConnection()
   
-    const queryString = "INSERT INTO `pc` (order_id, assembly_id, employees_id) VALUES (?, ?, ?)"
-    getConnection().query(queryString, [req.body.order_id, req.body.assembly_id,  req.body.employees_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `pc` (order_id, assembly_type_id, employee_id) VALUES (?, ?, ?)"
+    getConnection().query(queryString, [req.body.order_id, req.body.assembly_type_id,  req.body.employee_id], (err, results, fields) => {
       if (err) {    
         res.sendStatus(500)
         return
@@ -114,8 +75,8 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "UPDATE `pc` SET order_id = ?,  assembly_id = ?, employees_id = ? WHERE pc_id = ?"
-    getConnection().query(queryString, [req.body.order_id, req.body.assembly_id, req.body.employees_id, req.params.id], (err, results, fields) => {
+    const queryString = "UPDATE `pc` SET order_id = ?,  assembly_type_id = ?, employee_id = ? WHERE pc_id = ?"
+    getConnection().query(queryString, [req.body.order_id, req.body.assembly_type_id, req.body.employee_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)

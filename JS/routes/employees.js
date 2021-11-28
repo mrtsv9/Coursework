@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all employees")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM employees JOIN positions ON positions.positions_id = employees.position_id"
+    const queryString = "SELECT * FROM employees LEFT OUTER JOIN positions ON positions.position_id = employees.position_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for employees: " + error)
@@ -28,14 +28,14 @@ router.get("/", (req,res) => {
      
       const employees = rows.map((row) => {
         return {
-          employeesId: row.employees_id,
+          employeeId: row.employee_id,
           firstName: row.first_name,
           lastName: row.last_name,
           middleName: row.middle_name,
           address: row.address,
           phoneNumber: row.phone_number,
           email: row.email,
-          positionsId: row.position_id,               
+          positionId: row.position_id,
           position: {
             positionsId: row.position_id,
             name: row.name
@@ -65,7 +65,7 @@ router.get("/", (req,res) => {
     console.log("Fetching employees with id:" + req.params.id)
     const connection = getConnection()
 
-    const queryString = "Select * FROM `employees` WHERE employees_id = ?"
+    const queryString = "Select * FROM `employees` WHERE employee_id = ?"
   
     connection.query(queryString, [req.params.id], (error, rows, fields) => {
       if (error) {
@@ -81,8 +81,8 @@ router.get("/", (req,res) => {
 
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
-  
-    const queryString = "UPDATE `employees` SET first_name = ?, last_name = ?, middle_name = ?, address = ?, phone_number = ?, email = ?, position_id = ? WHERE employees_id = ?"
+    console.log(req.body.position_id)
+    const queryString = "UPDATE `employees` SET first_name = ?, last_name = ?, middle_name = ?, address = ?, phone_number = ?, email = ?, position_id = ? WHERE employee_id = ?"
     getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.email, req.body.position_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
@@ -97,7 +97,7 @@ router.get("/", (req,res) => {
     const connection = getConnection()
 
     const orderId = req.params.id
-    const queryString = "DELETE FROM `employees` WHERE employees_id = ?"
+    const queryString = "DELETE FROM `employees` WHERE employee_id = ?"
   
     connection.query(queryString, [req.params.id], (error, rows, fields) => {
       if (error) {

@@ -90,11 +90,11 @@ router.get("/", (req,res) => {
   router.delete("/delete/:id", (req, res) =>{
     const connection = getConnection()
 
-    const clientId = req.params.id
-    const queryString = "DELETE FROM `clients` WHERE clientId = ?"
+    const queryString = "DELETE FROM `clients` WHERE client_id = ?"
   
     connection.query(queryString, [req.params.id], (error, rows, fields) => {
       if (error) {
+        console.log(error)
         res.sendStatus(500)
       }
       res.end()

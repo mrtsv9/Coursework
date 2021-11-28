@@ -28,7 +28,7 @@ router.get("/", (req,res) => {
       
       const positions = rows.map((row) => {
         return {
-          positionId: row.positions_id,
+          positionId: row.position_id,
           name: row.name
         }
       })
@@ -55,7 +55,7 @@ router.get("/", (req,res) => {
     console.log("Fetching positions with id:" + req.params.id)
     const connection = getConnection()
 
-    const queryString = "Select * FROM `positions` WHERE positions_id = ?"
+    const queryString = "Select * FROM `positions` WHERE position_id = ?"
   
     connection.query(queryString, [req.params.id], (error, rows, fields) => {
       if (error) {
@@ -72,7 +72,7 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
     
-    const queryString = "UPDATE `positions` SET name = ? WHERE positions_id = ?"
+    const queryString = "UPDATE `positions` SET name = ? WHERE position_id = ?"
     getConnection().query(queryString, [req.body.name, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
@@ -86,10 +86,11 @@ router.get("/", (req,res) => {
   router.delete("/delete/:id", (req, res) =>{
     const connection = getConnection()
 
-    const queryString = "DELETE FROM `positions` WHERE positions_id = ?"
+    const queryString = "DELETE FROM `positions` WHERE position_id = ?"
   
     connection.query(queryString, [req.params.id], (error, rows, fields) => {
       if (error) {
+        console.log(console)
         res.sendStatus(500)
       }
       res.end()

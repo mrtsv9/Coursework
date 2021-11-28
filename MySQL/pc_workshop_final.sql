@@ -35,9 +35,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`delivery_methods` (
   `delivery_method_id` INT NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(45) NOT NULL,
+  `delivery_type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`delivery_method_id`),
-  UNIQUE INDEX `delivery_type_UNIQUE` (`type` ASC) VISIBLE)
+  UNIQUE INDEX `delivery_type_UNIQUE` (`delivery_type` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -46,9 +46,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`payment_methods` (
   `payment_method_id` INT NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(45) NOT NULL,
+  `payment_type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`payment_method_id`),
-  UNIQUE INDEX `payment_type_UNIQUE` (`type` ASC) VISIBLE)
+  UNIQUE INDEX `payment_type_UNIQUE` (`payment_type` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`orders` (
   CONSTRAINT `fk_orders_clients`
     FOREIGN KEY (`client_id`)
     REFERENCES `pc_workshop`.`clients` (`client_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_delivery_methods1`
     FOREIGN KEY (`delivery_method_id`)
@@ -116,13 +116,13 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`employees` (
   `address` VARCHAR(45) NOT NULL,
   `phone_number` CHAR(13) NULL,
   `email` VARCHAR(45) NULL,
-  `position_id` INT NOT NULL,
+  `position_id` INT,
   PRIMARY KEY (`employee_id`),
   INDEX `fk_employees_positions1_idx` (`position_id` ASC) VISIBLE,
   CONSTRAINT `fk_employees_positions1`
     FOREIGN KEY (`position_id`)
     REFERENCES `pc_workshop`.`positions` (`position_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`pc` (
   CONSTRAINT `fk_pc_orders1`
     FOREIGN KEY (`order_id`)
     REFERENCES `pc_workshop`.`orders` (`order_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pc_assembly_types1`
     FOREIGN KEY (`assembly_type_id`)
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `pc_workshop`.`pc_accessories` (
   CONSTRAINT `fk_pc_has_accessories_pc1`
     FOREIGN KEY (`pc_id`)
     REFERENCES `pc_workshop`.`pc` (`pc_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pc_has_accessories_accessories1`
     FOREIGN KEY (`accessory_id`)

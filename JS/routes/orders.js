@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all orders")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM orders    JOIN clients ON clients.client_id = orders.client_id    JOIN payment_methods ON payment_methods.payment_methods_id = orders.payment_methods_id   JOIN delivery_methods ON delivery_methods.delivery_methods_id = orders.delivery_methods_id"
+    const queryString = "SELECT * FROM orders JOIN payment_methods ON payment_methods.payment_method_id = orders.payment_method_id   JOIN delivery_methods ON delivery_methods.delivery_method_id = orders.delivery_method_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for orders: " + error)
@@ -30,23 +30,16 @@ router.get("/", (req,res) => {
         return {
           orderId: row.order_id,
           address: row.address,
-          clientId: row.clients_client_id,
-          clients: {
-            clientId: row.client_id,
-            firstName: row.first_name,
-            lastName: row.last_name,
-            email: row.email,
-            phoneNumber: row.phone_number
-          },
-          paymentMethodsId: row.payment_methods_id,
-          payment_methods: {
-            paymentMethodsId: row.payment_methods_id,
-            paymentMethodsId: row.payment_methods_id
-          },
-          deliveryMethodsId: row.delivery_methods_id,
-          delivery_methods: {
-            deliveryMethodsId: row.delivery_methods_id,
+          clientId: row.client_id,
+          deliveryMethodId: row.delivery_method_id,
+          delivery: {
+            deliveryMethodId: row.delivery_method_id,
             deliveryType: row.delivery_type
+          },
+          paymentMethodId: row.payment_method_id,
+          payment: {
+            paymentMethodId: row.payment_method_id,
+            paymentType: row.payment_type
           }
         }
       })
@@ -59,8 +52,8 @@ router.get("/", (req,res) => {
   router.post("/create", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "INSERT INTO `orders` (address, client_id, payment_methods_id, delivery_methods_id) VALUES (?, ?, ?, ?)"
-    getConnection().query(queryString, [req.body.address,  req.body.clients_client_id, req.body.payment_methods_id, req.body.delivery_methods_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `orders` (address, client_id, payment_method_id, delivery_method_id) VALUES (?, ?, ?, ?)"
+    getConnection().query(queryString, [req.body.address,  req.body.client_id, req.body.delivery_method_id, req.body.payment_method_id], (err, results, fields) => {
       if (err) {
         res.sendStatus(500)
         return
@@ -90,8 +83,8 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "UPDATE `orders` SET address = ?, client_id = ?, payment_methods_id = ?, delivery_methods_id = ? WHERE order_id = ?"
-    getConnection().query(queryString, [req.body.address, req.body.clients_client_id, req.body.payment_methods_id, req.body.delivery_methods_id, req.params.id], (err, results, fields) => {
+    const queryString = "UPDATE `orders` SET address = ?, client_id = ?, payment_method_id = ?, delivery_method_id = ? WHERE order_id = ?"
+    getConnection().query(queryString, [req.body.address, req.body.client_id, req.body.payment_method_id, req.body.delivery_method_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)
