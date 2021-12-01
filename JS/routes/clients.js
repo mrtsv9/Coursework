@@ -47,6 +47,7 @@ router.get("/", (req,res) => {
     const queryString = "INSERT INTO `clients` (first_name, last_name, email, phone_number) VALUES (?, ?, ?, ?)"
     getConnection().query(queryString, [req.body.first_name, req.body.last_name, req.body.email, req.body.phone_number], (err, results, fields) => {
       if (err) {
+        console.log(err)
         res.sendStatus(500)
         return
       }
