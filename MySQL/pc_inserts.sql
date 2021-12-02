@@ -1,5 +1,5 @@
 insert into clients (first_name, last_name, email, phone_number) 
-	values("qwe", "rty", "iuo", "123"), ("q2", "vrgrgr", "bgt", "123456");
+	values("Максим", "Сущиков", "mail1", "123"), ("Максим", "Фамилия", "mail2", "456");
     
 insert into delivery_methods (`delivery_type`)
 	values("by car"), ("by nogi");

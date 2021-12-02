@@ -31,6 +31,7 @@ router.get("/", (req,res) => {
           accessoriesId: row.accessory_id,  
           name: row.name,
           properties: row.properties,
+          price: row.price,
           typeOfAccessoriesId: row.type_of_accessory_id,
           typeOfAccessories: {
             typeOfAccessoriesId: row.type_of_accessory_id,
@@ -47,8 +48,8 @@ router.get("/", (req,res) => {
   router.post("/create", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "INSERT INTO `accessories` (name, properties, types_of_accessories_id) VALUES (?, ?, ?)"
-    getConnection().query(queryString, [req.body.name,  req.body.properties, req.body.types_of_accessories_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `accessories` (name, properties, price, types_of_accessories_id) VALUES (?, ?, ?, ?)"
+    getConnection().query(queryString, [req.body.name,  req.body.properties, req.body.price, req.body.types_of_accessories_id], (err, results, fields) => {
       if (err) {    
         res.sendStatus(500)
         return
@@ -78,8 +79,8 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "UPDATE `accessories` SET name = ?, properties = ?, types_of_accessories_id = ? WHERE accessories_id = ?"
-    getConnection().query(queryString, [req.body.name, req.body.properties, req.body.types_of_accessories_id, req.params.id], (err, results, fields) => {
+    const queryString = "UPDATE `accessories` SET name = ?, properties = ?, price = ?, types_of_accessories_id = ? WHERE accessories_id = ?"
+    getConnection().query(queryString, [req.body.name, req.body.properties, req.body.price, req.body.types_of_accessories_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)

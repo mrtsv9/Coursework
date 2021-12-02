@@ -35,6 +35,7 @@ router.get("/", (req,res) => {
           address: row.address,
           phoneNumber: row.phone_number,
           email: row.email,
+          password: row.password,
           positionId: row.position_id,
           position: {
             positionsId: row.position_id,
@@ -51,8 +52,8 @@ router.get("/", (req,res) => {
   router.post("/create", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "INSERT INTO `employees` (first_name, last_name, middle_name, address, phone_number, email, position_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
-    getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.email, req.body.position_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `employees` (first_name, last_name, middle_name, address, phone_number, email, password, position_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.password, req.body.email, req.body.position_id], (err, results, fields) => {
       if (err) {
         res.sendStatus(500)
         return
@@ -82,7 +83,7 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
     console.log(req.body.position_id)
-    const queryString = "UPDATE `employees` SET first_name = ?, last_name = ?, middle_name = ?, address = ?, phone_number = ?, email = ?, position_id = ? WHERE employee_id = ?"
+    const queryString = "UPDATE `employees` SET first_name = ?, last_name = ?, middle_name = ?, address = ?, phone_number = ?, email = ?, password = ?, position_id = ? WHERE employee_id = ?"
     getConnection().query(queryString, [req.body.first_name,  req.body.last_name, req.body.middle_name, req.body.address, req.body.phone_number, req.body.email, req.body.position_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)

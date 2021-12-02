@@ -32,7 +32,8 @@ router.get("/", (req,res) => {
           firstName: row.first_name,
           lastName: row.last_name,
           email: row.email,
-          phoneNumber: row.phone_number
+          phoneNumber: row.phone_number,
+          password: row.password
         }
       })
   
@@ -42,10 +43,9 @@ router.get("/", (req,res) => {
   })
 
   router.post("/create", (req, res) => {
-    const connection = getConnection()
   
-    const queryString = "INSERT INTO `clients` (first_name, last_name, email, phone_number) VALUES (?, ?, ?, ?)"
-    getConnection().query(queryString, [req.body.first_name, req.body.last_name, req.body.email, req.body.phone_number], (err, results, fields) => {
+    const queryString = "INSERT INTO `clients` (first_name, last_name, email, phone_number, password) VALUES (?, ?, ?, ?, ?)"
+    getConnection().query(queryString, [req.body.first_name, req.body.last_name, req.body.email, req.body.phone_number, req.body.password], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)
@@ -75,10 +75,9 @@ router.get("/", (req,res) => {
   })
 
   router.put("/update/:id", (req, res) => {
-    const connection = getConnection()
   
-    const queryString = "UPDATE `clients` SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE client_id = ?"
-    getConnection().query(queryString, [req.body.first_name, req.body.last_name, req.body.email, req.body.phone_number, req.params.id], (err, results, fields) => {
+    const queryString = "UPDATE `clients` SET first_name = ?, last_name = ?, email = ?, phone_number = ?, password = ? WHERE client_id = ?"
+    getConnection().query(queryString, [req.body.first_name, req.body.last_name, req.body.email, req.body.phone_number, req.body.password, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)
