@@ -17,6 +17,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `pc_workshop` DEFAULT CHARACTER SET utf8 ;
 USE `pc_workshop` ;
 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+flush privileges;
+
 -- -----------------------------------------------------
 -- Table `pc_workshop`.`clients`
 -- -----------------------------------------------------
