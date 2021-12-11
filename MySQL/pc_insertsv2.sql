@@ -25,8 +25,8 @@ insert into pc (total_price, order_id, assembly_type_id, employee_id)
 insert into types_of_accessories (`type`) 
 	values("cpu"), ("gpu");       
     
-insert into accessories (`name`, properties, price , type_of_accessory_id) 
-	values("1660 super", "very good", 20 , 2), ("ryzen 5 5600h", "awesome", 10 , 1);     
+insert into accessories (name, properties, price, type_of_accessory_id) 
+	values("1660 super", "very good", 20 , 1), ("ryzen 5 5600h", "awesome", 10 , 1);     
     
 insert into pc_accessories (pc_id, accessory_id) 
 	values(2, 2), (2, 1);        

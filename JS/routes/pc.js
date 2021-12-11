@@ -37,7 +37,7 @@ router.get("/", (req,res) => {
           employeeId: row.employee_id
         }
       })
-  
+      
       console.log("I think we fetched pc's successfully")
       res.json(pc)
     })
