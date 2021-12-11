@@ -31,6 +31,7 @@ router.get("/", (req,res) => {
       const pc = rows.map((row) => {
         return {
           pcId: row.pc_id,
+          title: row.title,
           orderId: row.order_id,
           totalPrice: row.total_price,
           assemblyTypeId: row.assembly_type_id,
@@ -45,8 +46,8 @@ router.get("/", (req,res) => {
 
   router.post("/create", (req, res) => {
   
-    const queryString = "INSERT INTO `pc` (order_id, total_price, assembly_type_id, employee_id) VALUES (?, ?, ?, ?)"
-    getConnection().query(queryString, [req.body.order_id, req.body.total_price, req.body.assembly_type_id,  req.body.employee_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `pc` (order_id, title, total_price, assembly_type_id, employee_id) VALUES (?, ?, ?, ?, ?)"
+    getConnection().query(queryString, [req.body.order_id, req.body.title, req.body.total_price, req.body.assembly_type_id,  req.body.employee_id], (err, results, fields) => {
       if (err) {    
         res.sendStatus(500)
         return
@@ -76,8 +77,8 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "UPDATE `pc` SET order_id = ?, total_price = ?,  assembly_type_id = ?, employee_id = ? WHERE pc_id = ?"
-    getConnection().query(queryString, [req.body.order_id, req.body.total_price, req.body.assembly_type_id, req.body.employee_id, req.params.id], (err, results, fields) => {
+    const queryString = "UPDATE `pc` SET order_id = ?, title = ?, total_price = ?,  assembly_type_id = ?, employee_id = ? WHERE pc_id = ?"
+    getConnection().query(queryString, [req.body.order_id, req.body.title, req.body.total_price, req.body.assembly_type_id, req.body.employee_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)
