@@ -137,6 +137,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`pc` (
   `pc_id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
   `total_price` INT NOT NULL,
   `order_id` INT NOT NULL,
   `assembly_type_id` INT NOT NULL,

@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all pc's")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM pc"
+    const queryString = "SELECT * FROM pc JOIN assembly_types ON assembly_types.assembly_type_id = pc.assembly_type_id"
 
     // const queryString = "SELECT * FROM pc    JOIN orders ON orders.order_id = pc.order_id   JOIN assembly_types ON assembly_types.assembly_type_id = pc.assembly_type_id    JOIN employees ON employees.employee_id = pc.employee_id"
     connection.query(queryString, (error, rows, fields) => {
@@ -31,9 +31,14 @@ router.get("/", (req,res) => {
       const pc = rows.map((row) => {
         return {
           pcId: row.pc_id,
+          title: row.title,
           orderId: row.order_id,
           totalPrice: row.total_price,
           assemblyTypeId: row.assembly_type_id,
+          assembly: {
+            assemblyTypeId: row.assembly_type_id,
+            type: row.type
+          },
           employeeId: row.employee_id
         }
       })
@@ -45,8 +50,8 @@ router.get("/", (req,res) => {
 
   router.post("/create", (req, res) => {
   
-    const queryString = "INSERT INTO `pc` (order_id, total_price, assembly_type_id, employee_id) VALUES (?, ?, ?, ?)"
-    getConnection().query(queryString, [req.body.order_id, req.body.total_price, req.body.assembly_type_id,  req.body.employee_id], (err, results, fields) => {
+    const queryString = "INSERT INTO `pc` (order_id, title, total_price, assembly_type_id, employee_id) VALUES (?, ?, ?, ?, ?)"
+    getConnection().query(queryString, [req.body.order_id, req.body.title, req.body.total_price, req.body.assembly_type_id,  req.body.employee_id], (err, results, fields) => {
       if (err) {    
         res.sendStatus(500)
         return
@@ -76,8 +81,8 @@ router.get("/", (req,res) => {
   router.put("/update/:id", (req, res) => {
     const connection = getConnection()
   
-    const queryString = "UPDATE `pc` SET order_id = ?, total_price = ?,  assembly_type_id = ?, employee_id = ? WHERE pc_id = ?"
-    getConnection().query(queryString, [req.body.order_id, req.body.total_price, req.body.assembly_type_id, req.body.employee_id, req.params.id], (err, results, fields) => {
+    const queryString = "UPDATE `pc` SET order_id = ?, title = ?, total_price = ?,  assembly_type_id = ?, employee_id = ? WHERE pc_id = ?"
+    getConnection().query(queryString, [req.body.order_id, req.body.title, req.body.total_price, req.body.assembly_type_id, req.body.employee_id, req.params.id], (err, results, fields) => {
       if (err) {
         console.log(err)
         res.sendStatus(500)
