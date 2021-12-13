@@ -18,7 +18,7 @@ router.get("/", (req,res) => {
     console.log("Fetching all positions")
     const connection = getConnection()
   
-    const queryString = "SELECT * FROM positions"
+    const queryString = "SELECT * FROM positions ORDER BY position_id"
     connection.query(queryString, (error, rows, fields) => {
       if (error) {
         console.log("Failed to query for positions: " + error)

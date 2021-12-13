@@ -26,7 +26,7 @@ app.use('/employees', employeeRoutes)
 app.use('/pc', pcRoutes)
 app.use('/accessories', accessoriesRoutes)
 app.use('/pc-accessories', pc_accessories)
-app.use('/type-of-accessories', types_of_accessories)
+app.use('/types-of-accessories', types_of_accessories)
 
 
 app.get("/", (req, res) => {
