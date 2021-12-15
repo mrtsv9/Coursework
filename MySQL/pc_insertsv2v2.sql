@@ -11,7 +11,7 @@ insert into orders (address, client_id, delivery_method_id, payment_method_id)
 	values("address", 1, 2, 1), ("address2", 2, 1, 2);
     
  insert into assembly_types (`type`) 
-	values("готовая сборка"), ("выбор комплектующих");
+	values("Готовая сборка"), ("Выбор комплектующих");
     
 insert into positions (`name`) 
 	values("admin"), ("ne admin");

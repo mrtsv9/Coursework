@@ -39,11 +39,13 @@ router.get("/", (req,res) => {
   })
 
   router.post("/create", (req, res) => {
-    const connection = getConnection()
   
     const queryString = "INSERT INTO `pc_accessories` (pc_id, accessory_id) VALUES (?, ?)"
-    getConnection().query(queryString, [req.body.pc_id, req.body.accessories_id], (err, results, fields) => {
+    getConnection().query(queryString, [req.body.pc_id, req.body.accessory_id], (err, results, fields) => {
+      console.log(req)
+      console.log(res)
       if (err) {    
+        console.log(err)
         res.sendStatus(500)
         return
       }
