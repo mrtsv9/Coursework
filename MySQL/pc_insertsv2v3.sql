@@ -1,5 +1,5 @@
 insert into clients (first_name, last_name, email, phone_number, `password`) 
-		values("Максим", "Сащеко", "sascheka@gmail.com", "+375291234567", "pass1"), ("Скурат", "Денис", "skuratden@mail.ru", "375297128432", "pass2");
+	values("Максим", "Сащеко", "sascheka@gmail.com", "+375291234567", "pass1"), ("Денис", "Скурат", "skuratden@mail.ru", "375297128432", "pass2");
     
 insert into delivery_methods (`delivery_type`)
 	values("Доставка"), ("Самовывоз");
@@ -31,7 +31,5 @@ insert into accessories (`name`, properties, price , type_of_accessory_id)
     ("3080", "good", 40 , 2), ("intel 5", "cool", 50 , 1), ("Crucial Ballistix", "DDR4 DIMM", 25, 3);     
     
 insert into pc_accessories (pc_id, accessory_id) 
-	values(2, 1), (1, 2);        
-    
-insert into pc_accessories (pc_id, accessory_id) 
-	values(2, 4);      
+	values(2, 1), (1, 3), (1, 2), (1, 5);        
+        

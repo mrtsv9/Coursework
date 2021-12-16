@@ -25,12 +25,13 @@ flush privileges;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`clients` (
   `client_id` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(20) NOT NULL,
+  `last_name` VARCHAR(20) NOT NULL,
+  `email`  VARCHAR(20) NOT NULL,
   `phone_number` CHAR(13) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`client_id`))
+  `password` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`client_id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -39,7 +40,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`delivery_methods` (
   `delivery_method_id` INT NOT NULL AUTO_INCREMENT,
-  `delivery_type` VARCHAR(45) NOT NULL,
+  `delivery_type` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`delivery_method_id`),
   UNIQUE INDEX `delivery_type_UNIQUE` (`delivery_type` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -50,7 +51,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`payment_methods` (
   `payment_method_id` INT NOT NULL AUTO_INCREMENT,
-  `payment_type` VARCHAR(45) NOT NULL,
+  `payment_type` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`payment_method_id`),
   UNIQUE INDEX `payment_type_UNIQUE` (`payment_type` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -61,7 +62,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`orders`  (
   `order_id` INT NOT NULL AUTO_INCREMENT,
-  `address` VARCHAR(45) NULL,
+  `address` VARCHAR(30) NULL,
   `client_id` INT NOT NULL,
   `delivery_method_id` INT NOT NULL,
   `payment_method_id` INT NOT NULL,
@@ -92,7 +93,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`assembly_types` (
   `assembly_type_id` INT NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(45) NOT NULL,
+  `type` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`assembly_type_id`),
   UNIQUE INDEX `type_UNIQUE` (`type` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -114,15 +115,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`employees` (
   `employee_id` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `middle_name` VARCHAR(45) NOT NULL,
-  `address` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(20) NOT NULL,
+  `last_name` VARCHAR(20) NOT NULL,
+  `middle_name` VARCHAR(20) NOT NULL,
+  `address` VARCHAR(30) NOT NULL,
   `phone_number` CHAR(13) NULL,
-  `email` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(20) NULL,
+  `password` VARCHAR(20) NOT NULL,
   `position_id` INT,
   PRIMARY KEY (`employee_id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   INDEX `fk_employees_positions1_idx` (`position_id` ASC) VISIBLE,
   CONSTRAINT `fk_employees_positions1`
     FOREIGN KEY (`position_id`)
@@ -137,12 +139,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`pc` (
   `pc_id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(20) NOT NULL,
   `total_price` INT NOT NULL,
   `order_id` INT NOT NULL,
   `assembly_type_id` INT NOT NULL,
   `employee_id` INT NOT NULL,
   PRIMARY KEY (`pc_id`),
+ UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE,
   INDEX `fk_pc_orders1_idx` (`order_id` ASC) VISIBLE,
   INDEX `fk_pc_assembly_types1_idx` (`assembly_type_id` ASC) VISIBLE,
   INDEX `fk_pc_employees1_idx` (`employee_id` ASC) VISIBLE,
@@ -169,7 +172,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`types_of_accessories` (
   `type_of_accessory_id` INT NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(45) NOT NULL,
+  `type` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`type_of_accessory_id`),
   UNIQUE INDEX `type_UNIQUE` (`type` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -180,11 +183,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pc_workshop`.`accessories` (
   `accessory_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `properties` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `properties` VARCHAR(20) NOT NULL,
   `price` INT NOT NULL,
   `type_of_accessory_id` INT NOT NULL,
   PRIMARY KEY (`accessory_id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
   INDEX `fk_accessories_types_of_accessories1_idx` (`type_of_accessory_id` ASC) VISIBLE,
   CONSTRAINT `fk_accessories_types_of_accessories1`
     FOREIGN KEY (`type_of_accessory_id`)
