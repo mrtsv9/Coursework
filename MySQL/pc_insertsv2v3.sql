@@ -1,5 +1,5 @@
 insert into clients (first_name, last_name, email, phone_number, `password`) 
-	values("Максим", "Сащеко", "sascheka@gmail.com", "+375291234567", "pass1"), ("Денис", "Скурат", "skuratden@mail.ru", "375297128432", "pass2");
+	values("Максим", "Сащеко", "sascheka@gmail.com", "+375291234567", "pass1"), ("Денис", "Скурат", "skuratden@mail.ru", "+375297128432", "pass2");
     
 insert into delivery_methods (`delivery_type`)
 	values("Доставка"), ("Самовывоз");
@@ -22,7 +22,7 @@ insert into employees (first_name, last_name, middle_name, address, phone_number
     
 insert into pc (title, total_price, order_id, assembly_type_id, employee_id) 
 	values("Игровой компьютер", 0, 1, 2, 1), ("Super PC", 0, 2, 2, 2);       
-    
+
 insert into types_of_accessories (`type`) 
 	values("CPU"), ("GPU"), ("RAM");       
     
@@ -32,4 +32,7 @@ insert into accessories (`name`, properties, price , type_of_accessory_id)
     
 insert into pc_accessories (pc_id, accessory_id) 
 	values(2, 1), (1, 3), (1, 2), (1, 5);        
+    
+    
+    
         
